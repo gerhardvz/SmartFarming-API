@@ -22,7 +22,7 @@ jobs:
     steps:
       - name: Setup SSH
         run: |-
-             ${{secrets.TOKEN}} > ~/.ssh/id_rsa
+             echo ${{secrets.TOKEN}} > ~/.ssh/id_rsa
         
       - name: Cloning Main Git Branch
         run: |-
