@@ -24,6 +24,7 @@ jobs:
         run: |-
              mkdir -p ~/.ssh/
              echo ${{secrets.TOKEN}} > ~/.ssh/id_rsa
+             chmod 600 ~/.shh/id_rsa
         
       - name: Cloning Main Git Branch
         run: |-
