@@ -1,0 +1,18 @@
+{
+  "name": "smartfarm_api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "flask": "^0.2.10",
+    "opencv": "^7.0.0",
+    "numpy": "^0.0.1",
+    "jsonpickle": "^1.1.2"
+  }
+}
