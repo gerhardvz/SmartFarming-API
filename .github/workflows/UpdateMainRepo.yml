@@ -41,6 +41,3 @@ jobs:
             git commit -m "Updating Submodule Branches"
             git push
             
-    
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
