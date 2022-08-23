@@ -21,10 +21,9 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Setup SSH
-        uses: MrSquaare/ssh-setup-action@v1
-        with:
-            host: github.com
-            private-key: ${{ secrets.KEY }}
+        run: |-
+             ${{secrets.TOKEN}} > ~/.ssh/id_rsa
+        
       - name: Cloning Main Git Branch
         run: |-
             git clone --recursive git clone git@github.com:gerhardvz/SmartFarming.git/
