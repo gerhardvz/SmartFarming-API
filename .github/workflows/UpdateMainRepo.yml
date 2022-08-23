@@ -24,6 +24,7 @@ jobs:
         run: |-
             git clone https://github.com/gerhardvz/SmartFarming.git/
             cd ./SmartFarming
+            ls -la
       - name: Setting Git user
         run: |-
             git config --global user.email "gerhard@schoongezich.com"
@@ -32,7 +33,7 @@ jobs:
       - name: Updating Submodules
         run: |-
             cd ./SmartFarming
-            git submodule update --recursive
+            git submodule update --recursive --remote --merge
             
       - name: Commiting and Pushing to Master Branch
         run: |-
