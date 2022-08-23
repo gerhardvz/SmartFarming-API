@@ -24,7 +24,7 @@ jobs:
         run: |-
             git clone https://github.com/gerhardvz/SmartFarming.git/
             cd ./SmartFarming
-            ls -la
+            ls -la ./SmartFarming-API
       - name: Setting Git user
         run: |-
             git config --global user.email "gerhard@schoongezich.com"
