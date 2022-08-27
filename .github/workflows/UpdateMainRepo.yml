@@ -27,15 +27,17 @@ jobs:
              chmod 600 ~/.ssh/id_rsa
              cat ~/.ssh/id_rsa
         
+      
+      - name: Setting Git user
+        run: |-
+            git config --global user.email "gerhard@schoongezich.com"
+            git config --global user.name "Gerhard van Zyl"
+            
       - name: Cloning Main Git Branch
         run: |-
             git clone --recursive https://${{secrets.TOKEN}}@github.com/gerhardvz/SmartFarming.git/
             cd ./SmartFarming
             ls -la ./SmartFarming-API
-      - name: Setting Git user
-        run: |-
-            git config --global user.email "gerhard@schoongezich.com"
-            git config --global user.name "Gerhard van Zyl"
             
       - name: Updating Submodules
         run: |-
