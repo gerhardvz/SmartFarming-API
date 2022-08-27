@@ -29,7 +29,7 @@ jobs:
         
       - name: Cloning Main Git Branch
         run: |-
-            git clone --recursive https://${{secret.TOKEN}}@github.com/gerhardvz/SmartFarming.git/
+            git clone --recursive https://${{secrets.TOKEN}}@github.com/gerhardvz/SmartFarming.git/
             cd ./SmartFarming
             ls -la ./SmartFarming-API
       - name: Setting Git user
