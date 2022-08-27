@@ -33,6 +33,14 @@ jobs:
             git config --global user.email "gerhard@schoongezich.com"
             git config --global user.name "Gerhard van Zyl"
             
+      - name: Clone Main Git Branch
+        uses: actions/checkout@v3
+        with: 
+             repository: 'gerhardvz/SmartFarming'
+             token : ${{secrets.TOKEN}}
+             ssh-key: ${{secrets.KEY}} 
+             submodules : true
+           
       - name: Cloning Main Git Branch
         run: |-
             git clone --recursive https://${{secrets.TOKEN}}@github.com/gerhardvz/SmartFarming.git/
