@@ -40,6 +40,7 @@ jobs:
              token : ${{secrets.TOKEN}}
              ssh-key: ${{secrets.KEY}} 
              submodules : true
+             ssh-known-hosts: ${{secrets.KNOWN_HOSTS}}
            
       - name: Cloning Main Git Branch
         run: |-
