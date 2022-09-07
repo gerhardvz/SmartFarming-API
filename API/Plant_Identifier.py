@@ -120,13 +120,15 @@ def get_prediction(image_bytes):
     probs = torch.nn.functional.softmax(output, dim=1)
     # probs = new_model(image)
     conf, classes = torch.max(probs, dim=1)
-    return conf.item(), index_to_clasification[classes.item()]
+    return conf.item(), index_to_plant[classes.item()],index_to_condition[classes.item()]
 
 
 def init():
     label_df = pd.read_csv('classes.csv')
-    global index_to_clasification
-    index_to_clasification = label_df.to_dict()['Classifications']
+    global index_to_plant
+    global index_to_condition
+    index_to_plant = label_df.to_dict()['Plant']
+    index_to_condition = label_df.to_dict()['Condition']
     # Specify a path
     PATH = "plant-disease-model-complete.pth"
     # Load
