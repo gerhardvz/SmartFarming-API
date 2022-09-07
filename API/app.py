@@ -49,11 +49,33 @@ def getMLResult():
     # print("SavedImage")
 
     # print(img.read())
-    conf, y_pre = PI.get_prediction(img.read())
-    print(y_pre, ' at confidence score:{0:.2f}'.format(conf))
+    confidence, y_pre,condition = PI.get_prediction(img.read())
+    print(y_pre, ' at confidence score:{0:.2f}'.format(confidence))
 
     # pass img to ML Model to predict
-    response = {'message': 'It is working', 'prediction':y_pre+ ' at confidence score:{0:.2f}'.format(conf)}
+    response = {'message': 'It is working', 'prediction':{'confidence_level':confidence,'Plant':y_pre,'Condition':condition}}
+    response_pickled = jsonpickle.encode(response)
+    return Response(response=response_pickled, status=200, mimetype="application/json")
+
+@app.route('/ML/ArduinoUpload', methods=['POST'])
+def getMLResult():
+    r = request
+    # convert string of image data to uint8
+    print(r)
+    img = r.files['data']
+    print("GotImage")
+    # if (len(os.listdir("./img/")) > 4):
+    #     oldest = min(os.listdir("./img/"), key=lambda p: os.path.getctime(os.path.join("./img/", p)))
+    #     os.remove("./img/" + oldest)
+    # img.save("./img/" + img.filename)
+    # print("SavedImage")
+
+    # print(img.read())
+    confidence, y_pre,condition = PI.get_prediction(img.read())
+    print(y_pre, ' at confidence score:{0:.2f}'.format(confidence))
+
+    # pass img to ML Model to predict
+    response = {'message': 'It is working', 'prediction':{'confidence_level':confidence,'Plant':y_pre,'Condition':condition}}
     response_pickled = jsonpickle.encode(response)
     return Response(response=response_pickled, status=200, mimetype="application/json")
 
