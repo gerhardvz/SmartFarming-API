@@ -58,7 +58,7 @@ def getMLResult():
     return Response(response=response_pickled, status=200, mimetype="application/json")
 
 @app.route('/ML/ArduinoUpload', methods=['POST'])
-def getMLResult():
+def postArduinoUpload():
     r = request
     # convert string of image data to uint8
     print(r)
