@@ -1,0 +1,459 @@
+openapi: "3.0.0"
+info:
+  description: "SmartFarming RestAPI Endpoint structure"
+  version: "1.0.0"
+  title: "SmartFarming RESTAPI"
+  contact:
+    email: "578244@student.belgiumcampus.ac.za"
+#consumes:
+#  - "application/json"
+#produces:
+#  - "application/json"
+#
+#basePath: "/api"
+
+# Paths supported by the server application
+paths:
+  #  Device endpoints
+  /devices:
+    get:
+      operationId: "app.services.DeviceService.get_device"
+      tags:
+        - "Devices"
+      summary: "Returns the list of all devices registered on the system"
+      description: "Read the list of people"
+      parameters:
+        - in: query
+          name: ascending
+          schema:
+            type: boolean
+          required: false
+          description: "Return in Ascending order"
+      responses:
+        200:
+          description: "Successful read device list operation"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  properties:
+                    id:
+                      type: "integer"
+                    name:
+                      type: "string"
+    post:
+      tags:
+        - "Devices"
+      summary: "Adds a new device to the system"
+      description: "Adds a new device to be used by the system"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+
+      responses:
+        200:
+          description: "Successfully added new device"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  id:
+                    type: "integer"
+                  name:
+                    type: "string"
+      operationId: "app.services.DeviceService.add_device"
+    delete:
+      tags:
+        - "Devices"
+      summary: "Removes a device from the system"
+      description: "Removes a device from the system"
+      parameters:
+        - in: query
+          name: device_id
+          schema:
+            type: integer
+          required: true
+          description: "Device Id that needs to be removed"
+
+      responses:
+        200:
+          description: "Successfully added new device"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  id:
+                    type: "integer"
+                  name:
+                    type: "string"
+      operationId: "app.services.DeviceService.delete_device"
+  /devices/{id}:
+    get:
+      operationId: "app.services.DeviceService.get_device_by_id"
+      tags:
+        - "Devices"
+      summary: "Returns device which has the id registered on the system"
+      description: "Returns device which has the id registered on the system"
+      parameters:
+        - in: query
+          name: ascending
+          schema:
+            type: boolean
+          required: false
+          description: "Return in Ascending order"
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: "Device id"
+      responses:
+        200:
+          description: "Successful read device list operation"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  id:
+                    type: "integer"
+                  name:
+                    type: "string"
+
+
+  # Readings endpoints
+  /readings:
+    get:
+      operationId: "app.services.ReadingService.get_readings"
+      tags:
+        - "Readings"
+      summary: "Returns a list of all readings made with their ID and timestamps"
+      description: "Returns a list of all readings made with their ID and timestamps"
+
+      parameters:
+        - in: query
+          name: device_id
+          schema:
+            type: integer
+          required: false
+          description: "Numeric ID of the device of which you want readings from"
+        - in: query
+          name: timestamp
+          schema:
+            type: string
+          required: false
+          description: "timestamp of the readings you want"
+        - in: query
+          name: ascending
+          schema:
+            type: boolean
+          required: false
+          description: "Return in Ascending order"
+      responses:
+        200:
+          description: "Successful get of readings list operation"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  properties:
+                    id:
+                      type: "integer"
+                    device_id:
+                      type: integer
+                    timestamp:
+                      type: "string"
+    post:
+      tags:
+        - "Readings"
+      summary: "Adds a new Reading to the system"
+      description: "Adds a new Reading Timestamp to be used by the system"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                timestamp:
+                  type: "string"
+                device_id:
+                  type: "integer"
+      responses:
+        201:
+          description: "Successfully added new Reading Timestamp"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  id:
+                    type: "integer"
+                  timestamp:
+                    type: string
+                  device_id:
+                    type: integer
+                  ml_readings:
+                    type: "array"
+                    properties:
+                      prediction:
+                        type: integer
+                      accuracy:
+                        type: number
+      operationId: "app.services.ReadingService.add_new_reading"
+    delete:
+      tags:
+        - "Devices"
+      summary: "Removes a Reading from the system"
+      description: "Removes a Reading from the system"
+      operationId: "app.services.ReadingService.remove_reading"
+      parameters:
+        - in: query
+          name: reading_id
+          schema:
+            type: integer
+          required: true
+          description: "Reading Id that needs to be removed"
+
+      responses:
+        200:
+          description: "Successfully removed Reading"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  id:
+                    type: "integer"
+                  name:
+                    type: "string"
+
+  /readings/{id}:
+    get:
+      tags:
+        - "Readings"
+      summary: "Returns a list of all readings made with their ID and timestamps"
+      description: "Returns a list of all readings made with their ID and timestamps"
+      operationId: "app.services.ReadingService.get_reading_by_id"
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: True
+          description: "Numeric ID of the reading you want to get"
+        - in: query
+          name: ascending
+          schema:
+            type: boolean
+          required: false
+          description: "Return in Ascending order"
+      responses:
+        200:
+          description: "Successful get of readings list operation"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  properties:
+                    id:
+                      type: "integer"
+                    device_id:
+                      type: "integer"
+                    timestamp:
+                      type: "string"
+                    ml_readings:
+                      type: "array"
+
+  #
+  #  /readings/{id}:
+
+  #  /readings/{id}/ml:
+
+  /plants:
+    get:
+      operationId: "app.services.PlantService.get_plants"
+      tags:
+        - "Plants"
+      summary: "Returns a list of all plants made with their ID and name"
+      description: "Returns a list of all plant made with their ID and name"
+
+      parameters:
+        - in: query
+          name: plant_id
+          schema:
+            type: integer
+          required: false
+          description: "Numeric ID of the you want"
+        - in: query
+          name: ascending
+          schema:
+            type: boolean
+          required: false
+          description: "Return in Ascending order"
+      responses:
+        200:
+          description: "Successful get of plant list operation"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  properties:
+                    id:
+                      type: "integer"
+                    plant:
+                      type: "string"
+
+    post:
+      tags:
+        - "Readings"
+      summary: "Adds a new Plant to the system"
+      description: "Adds a new Plant to be used by the system"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                name:
+                  type: "string"
+      responses:
+        201:
+          description: "Successfully added new Plant"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  id:
+                    type: "integer"
+                  name:
+                    type: string
+
+      operationId: "app.services.PlantService.add_plant"
+    delete:
+      tags:
+        - "Plant"
+      summary: "Removes a Plant from the system"
+      description: "Removes a Plant from the system"
+      operationId: "app.services.PlantService.delete_plant"
+      parameters:
+        - in: query
+          name: plant_id
+          schema:
+            type: integer
+          required: true
+          description: "Plant Id that needs to be removed"
+
+      responses:
+        200:
+          description: "Successfully removed Plant"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  id:
+                    type: "integer"
+                  name:
+                    type: "string"
+
+  /plants/{id}:
+    get:
+      tags:
+        - "Readings"
+      summary: "Returns a list of all plants made"
+      description: "Returns a list of all plants made"
+      operationId: "app.services.PlantService.get_plant_by_id"
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: True
+          description: "Numeric ID of the plant you want to get"
+        - in: query
+          name: ascending
+          schema:
+            type: boolean
+          required: false
+          description: "Return in Ascending order"
+      responses:
+        200:
+          description: "Successful get of readings list operation"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  properties:
+                    id:
+                      type: "integer"
+                    name:
+                      type: "string"
+                    condition:
+                      type: "array"
+  /ML/Prediction:
+    post:
+      tags:
+        - "Machine Learning"
+      summary: "Generates ML Prediction"
+      description: "Takes in a picture and returns a Prediction on the Plant and the condition of the plant"
+      parameters:
+        - in: query
+          name: reading_id
+          schema:
+            type: integer
+          required: false
+          description: "Reading id to link the ML to"
+        - in: query
+          name: device_id
+          schema:
+            type: integer
+          required: false
+          description: "If no Reading is added create new reading"
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: "object"
+              properties:
+                image:
+                  type: "string"
+                  format: "base64"
+
+      responses:
+        201:
+          description: "Successfully created Prediction"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  timestamp:
+                    type: "string"
+                  prediction:
+                    type: "object"
+                    properties:
+                      confidence_level:
+                        type: "integer"
+                      plant:
+                        type: "string"
+                      condition:
+                        type: "string"
+
+      operationId: "app.services.MLReadingService.add_new_ml_reading"
