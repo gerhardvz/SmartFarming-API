@@ -1,0 +1,33 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: DeployToRaspPi
+
+on:
+  push:
+    branches: [ "release" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build-docker:
+
+    runs-on: self-hosted
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build Docker Image
+      run: |-
+          docker build -t "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}" ./
+          
+   # END - Docker auth and build 
+   
+  deploy-docker:
+
+    runs-on: self-hosted
+    steps:
+    - name: Deploy Docker Image
+      run: |-
+          docker up
+          

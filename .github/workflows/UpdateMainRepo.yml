@@ -1,0 +1,62 @@
+ #This is a basic workflow to help you get started with Actions
+
+name: UpdateMainRepoOnPush
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: self-hosted
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Setup SSH
+        run: |-
+             mkdir -p ~/.ssh/
+             echo "${{secrets.KEY}}" > ~/.ssh/id_rsa
+             chmod 600 ~/.ssh/id_rsa
+             cat ~/.ssh/id_rsa
+        
+      
+      - name: Setting Git user
+        run: |-
+            git config --global user.email "gerhard@schoongezich.com"
+            git config --global user.name "Gerhard van Zyl"
+            
+      - name: Clone Main Git Branch
+        uses: actions/checkout@v3
+        with: 
+             repository: 'gerhardvz/SmartFarming'
+             token : ${{secrets.TOKEN}}
+             ssh-key: ${{secrets.KEY}} 
+             submodules : true
+             ssh-known-hosts: ${{secrets.KNOWN_HOSTS}}
+           
+      - name: Cloning Main Git Branch
+        run: |-
+            git clone --recursive https://${{secrets.TOKEN}}@github.com/gerhardvz/SmartFarming.git/
+            cd ./SmartFarming
+            ls -la ./SmartFarming-API
+            
+      - name: Updating Submodules
+        run: |-
+            cd ./SmartFarming
+            git submodule update --recursive --remote --merge
+            
+      - name: Commiting and Pushing to Master Branch
+        run: |-
+            cd ./SmartFarming
+            git add *
+            git commit -m "Updating Submodule Branches"
+            git push
+            
