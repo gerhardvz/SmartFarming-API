@@ -133,11 +133,10 @@ def init():
     PATH = "./app/static/plant-disease-model-complete.pth"
     # Load
     global model
-    model = torch.load(PATH)
+    model = torch.load(PATH, map_location='cpu')
     model.eval()
     global device
     device = get_default_device()
-
 
 def test(image_path):
 
