@@ -22,6 +22,7 @@ class Plant(db.Model):
     max_soil_ec = Column(Integer)
     min_soil_ec = Column(Integer)
     url = Column(String)
+    description = Column(String)
     # condition = relationship("Condition")
 
 
