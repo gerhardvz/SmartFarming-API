@@ -139,7 +139,6 @@ def init():
     global device
     device = torch.device(get_default_device())
 
-
 def test(image_path):
 
 
