@@ -279,6 +279,43 @@ paths:
   #
   #  /readings/{id}:
 
+    /readings/{id}/ml:
+      get:
+        tags:
+          - "MLReadings"
+        summary: "Returns a list of all ml readings made reading_id"
+        description: "Returns a list of all ml readings made reading_id"
+        operationId: "app.services.MLReadingService.get_ml_readings_by_reading"
+        parameters:
+          - in: path
+            name: reading_id
+            schema:
+              type: integer
+            required: True
+            description: "Numeric ID of the mlreading you want to get"
+          - in: query
+            name: ascending
+            schema:
+              type: boolean
+            required: false
+            description: "Return in Ascending order"
+        responses:
+          200:
+            description: "Successful get of mlreadings list operation"
+            content:
+              application/json:
+                schema:
+                  type: "array"
+                  items:
+                    properties:
+                      id:
+                        type: "integer"
+                      prediction:
+                        type: "integer"
+                      accuracy:
+                        type: "integer"
+                      readings_id:
+                        type: "interger"
   #  /readings/{id}/ml:
 
   /plants:
