@@ -117,10 +117,10 @@ def get_prediction(image_bytes):
 
 def get_default_device():
     """Pick GPU if available, else CPU"""
-    if torch.cuda.is_available:
-        return torch.device("cuda")
-    else:
-        return torch.device("cpu")
+    # if torch.cuda.is_available:
+    #     return "cuda"
+    # else:
+    return "cpu"
 
 
 def init():
@@ -133,10 +133,11 @@ def init():
     PATH = "./app/static/plant-disease-model-complete.pth"
     # Load
     global model
-    model = torch.load(PATH, map_location='cpu')
+    print("Device: ",get_default_device())
+    model = torch.load(PATH, map_location=get_default_device())
     model.eval()
     global device
-    device = get_default_device()
+    device = torch.device(get_default_device())
 
 def test(image_path):
 

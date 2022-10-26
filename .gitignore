@@ -2,5 +2,5 @@ node_modules
 .idea/
 .vscode/
 API/img/
-
+venv
 API/__pycache__/
