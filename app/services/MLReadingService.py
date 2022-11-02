@@ -45,7 +45,7 @@ def add_new_ml_reading():
     plant = Plant.query.join(PlantCondition).filter(PlantCondition.id == index).one_or_none()
     print(plant.name)
 
-    MLreading = MlReading(id=reading_id, prediction=plant_condition.id, accuracy=confidence)
+    MLreading = MlReading( prediction=plant_condition.id, accuracy=confidence,reading_id=reading_id)
     # MlReading.add(MLreading)
     db.session.add(MLreading)
     db.session.commit()
