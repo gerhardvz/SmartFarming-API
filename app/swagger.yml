@@ -279,7 +279,7 @@ paths:
   #
   #  /readings/{id}:
 
-    /readings/{id}/ml:
+  /readings/{id}/ml:
       get:
         tags:
           - "MLReadings"
